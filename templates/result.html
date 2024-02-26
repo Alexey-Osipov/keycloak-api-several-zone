@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta charset="utf8">
+<head>
+    <title>Результаты</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+    <h2>Результат</h2>
+    <style>
+        .output-text {
+            margin-bottom: 10px; /* Выберите необходимый отступ */
+        }
+    </style>
+    <div>
+        {% for line in output %}
+            <p class="output-text">{{ line }}</p>
+        {% endfor %}
+    </div>
+    <form action="/">
+        <button type="submit" class="button">Главная страница</button>
+    </form>
+</body>
+</html>

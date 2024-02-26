@@ -1,0 +1,127 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: var(--vc-c-bg);
+  scroll-behavior: smooth;
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.5;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  color: var(--vc-c-text);
+  text-rendering: optimizeLegibility;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.error {
+    border: 2px solid red;
+    padding: 3px; /* Добавляем отступ вокруг рамки */
+    background-color: #FCC; /* Цвет фона */
+    border-radius: 5px; /* Скругленные углы */
+}
+
+/* Headers */
+h1 {
+  font-size: var(--vc-f-size-6);
+  font-weight: 600;
+  line-height: 1.5;
+  color: blue;
+}
+
+h2 {
+  font-size: var(--vc-f-size-5);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+h3 {
+  font-size: var(--vc-f-size-4);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+h4 {
+  font-size: var(--vc-f-size-3);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+h5 {
+  font-size: var(--vc-f-size-2);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* TEXT */
+p,
+span,
+a {
+  font-size: var(--vc-f-size-2);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+a {
+  color: var(--vc-c-text-green);
+  text-decoration: none;
+}
+
+/* Button */
+
+.button {
+  display: inline-block;
+  margin: 0px;
+  padding: 5px 5px;
+  border-radius: 4px;
+  font-size: var(--vc-f-size-3);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--vc-c-text);
+}
+
+.button:hover {
+  color: var(--vc-c-bg-soft);
+  background-color: #56cc54;
+}
+
+.button:active {
+  background-color: #2ecc71;
+}
+
+.button-blue {
+  background-color: #00ad21;
+}
+
+.button-green {
+  background-color: #2ecc71;
+}
+
+div[style*="flex: 1;"] {
+    flex-basis: 10px;
+    flex-grow: 100px;
+}
+
+/* Стили для спиннера */
+.spinner {
+    border: 5px solid #2ecc71;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+blockquote {
+            font-style: italic;             /* Курсивный стиль */
+            border-left: 2px solid #ccc;    /* Левая линия слева от цитаты */
+            padding-left: 10px;             /* Отступ слева от линии */
+            margin-top: 10px;               /* Отступ сверху */
+            margin-left: 10px;              /* Отступ слева */
+        }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

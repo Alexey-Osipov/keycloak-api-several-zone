@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta charset="utf8">
+<head>
+    <title>Главная страница</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+    <h2>Главная страница</h2>
+        <h4>Автоматизация создания клиентов и пользователей сразу нескольких Тестовых Зонах Keycloak.</h4>
+        <blockquote>Возможны также варианты добавления ролей как пользователям, так и клиентам.</blockquote><br>
+        <a href="/createuser"><button class="button">Создать пользователя</button></a>
+        <a href="/createclient"><button class="button">Создать Клиента</button></a>
+        <a href="/loadtheme"><button class="button">Загрузить Тему</button></a>
+        <a href="/finduser"><button class="button">Найти Пользователя</button></a>
+        <a href="/findclient"><button class="button">Найти Клиента</button></a>
+    <br><br>
+</body>
+</html>

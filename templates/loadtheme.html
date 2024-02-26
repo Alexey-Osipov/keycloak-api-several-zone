@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta charset="utf8">
+<head>
+    <title>Загрузка новой Темы</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+    <h2>Загрузка новой темы и её применение</h2>
+    <div id="spinner" style="display: none;">
+        <!-- Спиннер -->
+        <div class="spinner"></div>
+    </div>
+    <blockquote>Загрузка архива с темой (theme.zip) и её активация у клиента на нескольких Тестовых Зонах Keycloak.</blockquote>
+    <h3>Необходимые параметры:</h3>
+    <form id="create_theme_form" method="POST" action="/loadtheme" enctype="multipart/form-data">
+        <label for="admin_name">Username Keycloak:</label><br>
+        <input type="text" id="admin_name" name="admin_name" required><br>
+
+        <label for="admin_password">Password Keycloak:</label><br>
+        <input type="password" id="admin_password" name="admin_password" required><br>
+
+        <div style="display: flex;">
+            <div style="flex: 1;">
+                <h3>Зоны выполнения:</h3>
+                <input type="checkbox" name="server" value="localhost:8080">Localhost<br>
+                <input type="checkbox" name="server" value="127.0.0.1:8080">127.0.0.1<br>
+                <input type="checkbox" name="server" value="sib-fsso-app1a.megafon.ru:8080">Alpha</label><br>
+                <input type="checkbox" name="server" value="vlg-fsso-app1b.megafon.ru:8080">Beta</label><br>
+                <input type="checkbox" name="server" value="vlg-fsso-app1e.megafon.ru:8080">Epsilon</label><br>
+                <input type="checkbox" name="server" value="vlg-fsso-app1k.megafon.ru:8080">Kappa</label><br>
+                <input type="checkbox" name="server" value="vlg-fsso-app1l.megafon.ru:8080">Lambda</label><br>
+                <input type="checkbox" name="server" value="vlg-fsso-app1n.megafon.ru:8080">Nuy</label><br>
+                <input type="checkbox" name="server" value="sib-fsso-app2r.megafon.ru:8080">Rho</label><br>
+                <input type="checkbox" name="server" value="sib-fsso-app1w.megafon.ru:8080">WF</label><br><br>
+                <!-- Остальные сервера -->
+
+                <h3>Укажите Realm:</h3>
+                <label for="realm"></label>
+                <select id="realm" name="realm">
+                    <option value="master">master</option>
+                    <option value="YotaVoice">YotaVoice</option>
+                </select>
+            </div>
+            <div style="flex: 5;">
+                <h3>Данные для загрузки Темы:</h3>
+                    <label for="clientName" title="На этого клиента и применится тема">Короткое Имя (client_id):</label><br>
+                    <input type="text" id="clientName" name="clientName" required><br>
+
+                    <label for="file" title="Файл с темой в формате .zip">Архив:</label><br>
+                    <input type="file" id="file" name="file" required><br>
+
+                    <label for="themeName" title="Имя темы Theme_version">Имя Темы:</label><br>
+                    <input type="text" id="themeName" name="themeName"><br>
+
+            </div>
+        </div><br>
+        <input type="submit" class="button" value="Загрузить Тему" onclick="validateAndSubmit(event)">
+    </form>
+        <form action="/"><br>
+        <button type="submit" class="button">Главная страница</button>
+    </form>
+    <script>
+        function validateAndSubmit(event) {
+            if (validateForm()) {
+                showSpinner();
+            } else {
+                // Если форма не прошла валидацию, отменяем отправку формы
+                event.preventDefault();
+            }
+        }
+
+        function validateForm() {
+            const checkboxes = document.querySelectorAll('input[name="server"]:checked');
+            if (checkboxes.length < 1) {
+                alert("Выберите хотя бы один сервер выполнения");
+                return false;
+            }
+
+            var requiredFields = ["admin_name", "admin_password", "clientName", "description", "redirectUris"];
+            var formValid = true;
+
+            requiredFields.forEach(function(fieldId) {
+                var field = document.getElementById(fieldId);
+
+                if (field.value === "") {
+                    field.classList.add("error");
+                    formValid = false;
+                } else {
+                    field.classList.remove("error");
+                }
+            });
+
+            return formValid;
+        }
+
+
+        function showSpinner() {
+            // Показываем спиннер
+            document.getElementById('spinner').style.display = 'block';
+
+            // Отключаем отправку формы, чтобы спиннер продолжал показываться
+            document.getElementById('create_theme_form').onsubmit = function() {
+                return false;
+            };
+
+            // Запускаем выполнение скрипта после задержки (для демонстрации спиннера)
+            setTimeout(runScript, 2000);
+        }
+
+        function runScript() {
+            // Включаем отправку формы
+            document.getElementById('create_theme_form').onsubmit = null;
+
+            // Отправляем форму
+            document.getElementById('create_theme_form').submit();
+        }
+</script>
+</body>
+</html>

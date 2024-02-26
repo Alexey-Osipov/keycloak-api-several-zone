@@ -1,0 +1,11 @@
+{
+    "servers": [
+        {"name": "LocalDocker", "value": "localhost"},
+        {"name": "127*Docker", "value": "127.0.0.1"},
+        {"name": "Name", "value": "hostname"}
+    ],
+    "realms": [
+        {"name": "master", "value": "master"},
+        {"name": "Name", "value": "RealmName"}
+    ]
+}

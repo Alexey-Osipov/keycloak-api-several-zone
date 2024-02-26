@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta charset="utf8">
+<head>
+    <title>Создание пользователя</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+    <h2>Создание пользователя и добавление ролей</h2>
+    <div id="spinner" style="display: none;">
+        <!-- Спиннер -->
+        <div class="spinner"></div>
+    </div>
+    <blockquote>Создание пользователей или добавление ролей сразу на нескольких Тестовых Зонах Keycloak.</blockquote>
+    <h3>Необходимые параметры:</h3>
+    <form id="create_user_form" method="POST" action="/createuser" enctype="multipart/form-data">
+        <label for="admin_name">Username Keycloak:</label><br>
+        <input type="text" id="admin_name" name="admin_name" required><br>
+
+        <label for="admin_password">Password Keycloak:</label><br>
+        <input type="password" id="admin_password" name="admin_password" required><br>
+
+		<div style="display: flex;">
+            <div style="flex: 1;">
+                <h3>Зоны выполнения:</h3>
+                <div id="zones_container"></div>
+
+                <h3>Укажите Realm:</h3>
+                <select id="realm" name="realm"></select>
+            </div>
+            <div style="flex: 5;">
+                <h3>Данные ТУЗ:</h3>
+                <label for="userName">Имя пользователя:</label><br>
+                <input type="text" id="userName" name="userName" required><br>
+
+                <label for="email" title="Не обязательный параметр">Email:</label><br>
+                <input type="text" id="email" name="email" ><br>
+
+                <h3>Атрибуты:</h3>
+                <label for="owner" title="Может быть использован email либо логин сотрудника МегаФон или совместителя: owner">Владелец:</label><br>
+                <input type="text" id="owner" name="owner" required><br>
+
+                <label for="purpose" title="Назначение ТУЗ - для чего она создаётся, какие системы взаимодействуют друг с другом с помощью данной ТУЗ: purpose">Назначение:</label><br>
+                <input type="text" id="purpose" name="purpose" required><br>
+
+                <label for="task" title="Номер задачи, поданной по процессу описанному в APIGW&FSSO: Getting Started: task">Заявка:</label><br>
+                <input type="text" id="task" name="task" required><br>
+
+                <h3>Назначить роли:</h3>
+                <label for="clientName" title="Client ID">Имя клиента:</label><br>
+                <input type="text" id="clientName" name="clientName" ><br>
+
+                <label for="roles" title="Можно указать несколько ролей, через запятую: role1,role2,role3">Роли:</label><br>
+                <input type="text" id="roles" name="roles" ><br>
+            </div>
+        </div><br>
+        <input type="submit" class="button" value="Создать Users" onclick="validateAndSubmit(event)">
+    </form>
+        <form action="/"><br>
+        <button type="submit" class="button">Главная страница</button>
+    </form>
+    <script src="{{ url_for('static', filename='load_data.js') }}"></script>
+    <script>
+        function validateAndSubmit(event) {
+            if (validateForm()) {
+                showSpinner();
+            } else {
+                // Если форма не прошла валидацию, отменяем отправку формы
+                event.preventDefault();
+            }
+        }
+
+        function validateForm() {
+            const checkboxes = document.querySelectorAll('input[name="server"]:checked');
+            if (checkboxes.length < 1) {
+                alert("Выберите хотя бы один сервер выполнения");
+                return false;
+            }
+
+            var requiredFields = ["admin_name", "admin_password", "userName", "owner", "purpose", "task"];
+            var formValid = true;
+
+            requiredFields.forEach(function(fieldId) {
+                var field = document.getElementById(fieldId);
+
+                if (field.value === "") {
+                    field.classList.add("error");
+                    formValid = false;
+                } else {
+                    field.classList.remove("error");
+                }
+            });
+
+            return formValid;
+        }
+
+
+        function showSpinner() {
+            // Показываем спиннер
+            document.getElementById('spinner').style.display = 'block';
+
+            // Отключаем отправку формы, чтобы спиннер продолжал показываться
+            document.getElementById('create_user_form').onsubmit = function() {
+                return false;
+            };
+
+            // Запускаем выполнение скрипта после задержки (для демонстрации спиннера)
+            setTimeout(runScript, 2000);
+        }
+
+        function runScript() {
+            // Включаем отправку формы
+            document.getElementById('create_user_form').onsubmit = null;
+
+            // Отправляем форму
+            document.getElementById('create_user_form').submit();
+        }
+</script>
+</body>
+</html>

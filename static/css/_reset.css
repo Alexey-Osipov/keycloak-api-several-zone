@@ -1,0 +1,88 @@
+/* Box sizing для всех елементов */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Настройки по умолчанию для html и body */
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Настройки article- выбирает прямых потомков article и добавляет им сверху внешний отступ в 1em */
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Настройки по умолчанию для таблиц */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Наследование шрифтов для полей ввода и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Настройки по умолчанию для img */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Настройки по умолчанию для ul, ol, у которых указан class */
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+span {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Убираем внешние отступы */
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
