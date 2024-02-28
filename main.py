@@ -27,12 +27,15 @@ def createclient():
         roles_input = request.form.get('roles')
         var8 = roles_input.split(',') if roles_input else []
         var9 = request.form.get("publicClient")
+        var10 = request.form.get("clientSecret")
         data = {
             "servers": var5,
             "description": var6,
             "redirectUris": var7,
             "roles": var8,
-            "publicClient": var9
+            "publicClient": var9,
+            "clientSecret": var10
+
         }
 
         # Записываем данные в файл JSON
@@ -67,8 +70,10 @@ def createuser():
         roles_input = request.form.get('roles')
         var10 = roles_input.split(',') if roles_input else []
         var11 = request.form.get('clientName')
+        var12 = request.form.get('userPass')
         data = {
             "servers": var5,
+            "userPass": var12,
             "email": var6,
             "owner": var7,
             "purpose": var8,

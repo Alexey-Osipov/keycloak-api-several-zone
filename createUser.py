@@ -1,6 +1,7 @@
 import random
 import requests
 import json
+import os
 from sys import argv
 
 
@@ -26,7 +27,17 @@ class KeyCloak:
             return response.json()
 
 
-    def createUser(self, server, accessToken, userName, password, realm, owner, purpose, task, enabled='true', temporary='false'):
+    def createUser(self, server, accessToken, userName, realm, owner, purpose, task, enabled='true', temporary='false'):
+        # Проверяем наличие файла пользователя
+        user_file_path = f"temp/user/{userName}.json"
+        if os.path.exists(user_file_path):
+            with open(user_file_path, 'r') as file:
+                data = json.load(file)
+                if "userPass" in data:
+                    password = data.get("userPass", generatePassword())
+        if password == "":
+            password = generatePassword()
+
         url = 'http://{0}:{1}/auth/admin/realms/{2}/users'.format(server, port, realm)
         response = requests.request('POST', url, json={
             "username": userName,
@@ -132,7 +143,7 @@ class KeyCloak:
             return response.status_code
 
 
-def generatePassword(length=20):
+def generatePassword(length=15):
     chars = '*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     password = ''
     for _ in range(length):
@@ -145,7 +156,6 @@ admin_password = argv[2]      # Список ТЗ выбранных в чекб
 
 
 kc = KeyCloak(admin_name, admin_password)
-password = generatePassword()
 realm = argv[3]         # Выбранный Рилм
 userName = argv[4]      # Имя клиента
 
@@ -176,7 +186,7 @@ for server in servers:
     # Create User
     if userName:
         print(f"Создаем пользователя...{userName} на сервере {server}")
-        status_code = kc.createUser(server, accessToken, userName, password, realm, owner, purpose, task)
+        status_code = kc.createUser(server, accessToken, userName, realm, owner, purpose, task)
         # Get User Information
         userInfo = kc.findUserByParameters(server, accessToken, userName, realm)
         userID = userInfo[0]['id']

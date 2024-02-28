@@ -1,6 +1,7 @@
 import requests
 import uuid
 import json
+import os
 from sys import argv
 
 class KeyCloak_Token:
@@ -23,13 +24,24 @@ class KeyCloak_Token:
         else:
             return response.json()
 
-    def createClient(self, server, accessToken, clientName, description, secret, realm, redirectUris, typeClient,
+    def createClient(self, server, accessToken, clientName, description, realm, redirectUris, typeClient,
                      enabled='true', consentRequired='false',
                      protocol="openid-connect", bearerOnly='false', standardFlowEnabled='true',
                      implicitFlowEnabled='false', directAccessGrantsEnabled='true',
                      authorizationServicesEnabled='false',
                      serviceAccountsEnabled='false',
                      clientAuthenticatorType="client-secret", fullScopeAllowed="false"):
+
+        # Проверяем наличие секрета в файле для данного клиента
+        secret_file_path = f"temp/{clientName}.json"
+        if os.path.exists(secret_file_path):
+            with open(secret_file_path, 'r') as file:
+                data = json.load(file)
+                if "clientSecret" in data:
+                    secret = data.get("clientSecret", str(uuid.uuid4()))
+        if secret == "":
+            secret = str(uuid.uuid4())
+
         url = 'http://{0}:{1}/auth/admin/realms/{2}/clients'.format(server, port, realm)
         response = requests.request('POST', url, json={
             "clientId": clientName,
@@ -110,11 +122,8 @@ username = argv[1]      # Список ТЗ выбранных в чекбокс
 password = argv[2]      # Список ТЗ выбранных в чекбоксе
 
 kct = KeyCloak_Token(username, password)
-client_secret = str(uuid.uuid4())
-
 realm = argv[3]         # Выбранный Рилм
 clientName = argv[4]    # Имя клиента
-
 
 with open(f"temp/{clientName}.json") as values:
     data = json.load(values)
@@ -138,7 +147,7 @@ for server in servers:
     print(f"###Выполняем регистрацию клиента {clientName} С созданием клиентских ролей: {roles}. В рилме: {realm} На сервере: {server}###")
     # Create Client
     print("Создаем клиента...")
-    status_code = kct.createClient(server, accessToken, clientName, description, client_secret, realm, redirectUris, typeClient)
+    kct.createClient(server, accessToken, clientName, description, realm, redirectUris, typeClient)
     # Get Client Information
     clientInfo = kct.getClientInfo(server, accessToken, clientName, realm)
     clientID = clientInfo[0].get('id')
