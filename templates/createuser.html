@@ -33,7 +33,7 @@
                 <label for="userName">Имя пользователя:</label><br>
                 <input type="text" id="userName" name="userName" required><br>
 
-                <label for="userPass" title= "При пустом значение пароль будет сгенерирован, требование к паролю 10-12 символов наличия хотя бы одной цифры (0-9), одного спецсимвола, одной заглавной и строчной буквы">Пароль пользователя:</label><br>
+                <label for="userPass" title= "При пустом значение пароль будет сгенерирован, требование к паролю 13-15 символов наличия хотя бы одного спецсимвола, одной заглавной и строчной буквы">Пароль пользователя:</label><br>
                 <input type="text" id="userPass" name="userPass"><br>
 
                 <label for="email" title="Не обязательный параметр">Email:</label><br>
@@ -97,7 +97,8 @@
             // Добавляем проверку для поля userPass
             var userPass = document.getElementById("userPass");
             var userPassValue = userPass.value.trim();
-            var userPassPattern = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[*!&$#?=@])[A-Za-z0-9*!&$#?=@]{10,12}$/;
+            var userPassPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!&$#?=@])[A-Za-z!&$#?=@]{16}$/;
+
 
             if (userPassValue === "" || userPassPattern.test(userPassValue)) {
                 userPass.classList.remove("error");

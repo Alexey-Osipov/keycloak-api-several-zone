@@ -103,6 +103,14 @@ div[style*="flex: 1;"] {
     flex-grow: 100px;
 }
 
+.toggle-container {
+        display: flex;
+        align-items: center;
+    }
+    .tokenExchange {
+        display: none;
+}
+
 /* Стили для спиннера */
 .spinner {
     border: 5px solid #2ecc71;

@@ -50,8 +50,12 @@
                         <option value="false">Сonfidential</option>
                         <option value="true">Public</option>
                     </select><br>
-                </div>
-            </div><br>
+
+                    <label for="toggle">Token exchange:</label>
+                    <input type="checkbox" id="toggle" title="Имя целевого клиента например: api-gateway">
+                    <input type="text" title="Имя целевого клиента например: api-gateway" class="tokenExchange" id="tokenExchange" name="tokenExchange" placeholder="Имя клиента: api-gateway" style="display:none;"><br>
+            </div>
+        </div><br>
         <input type="submit" class="button" value="Создать Client" onclick="validateAndSubmit(event)">
     </form>
         <form action="/"><br>
@@ -59,13 +63,26 @@
     </form>
     <script src="{{ url_for('static', filename='load_data.js') }}"></script>
     <script>
-        function validateAndSubmit(event) {
-            if (validateForm()) {
-                showSpinner();
+        const toggleSwitch = document.getElementById('toggle');
+        const textField = document.getElementById('tokenExchange');
+        const createClientForm = document.getElementById('create_client_form');
+
+        toggleSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                textField.style.display = 'block';
+                textField.required = true; // Добавляем обязательность к заполнению при активации чекбокса
             } else {
-                // Если форма не прошла валидацию, отменяем отправку формы
-                event.preventDefault();
+                textField.style.display = 'none';
+                textField.required = false; // Убираем обязательность к заполнению при деактивации чекбокса
             }
+        });
+
+        function validateAndSubmit(event) {
+            if (toggleSwitch.checked && !textField.value) {
+                event.preventDefault(); // Предотвращаем отправку формы, если поле не заполнено при активированном чекбоксе
+                alert('Пожалуйста, заполните поле "Token exchange".');
+            }
+            // У вас также нужно дописать проверки для других обязательных полей, если необходимо
         }
 
         function validateForm() {

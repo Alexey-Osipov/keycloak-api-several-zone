@@ -6,12 +6,12 @@
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
 </head>
 <body>
-    <h2>Поиск пользователя + роли?</h2>
+    <h2>Поиск пользователя</h2>
     <div id="spinner" style="display: none;">
         <!-- Спиннер -->
         <div class="spinner"></div>
     </div>
-    <blockquote>Поиск пользователя на нескольких Тестовых Зонах Keycloak.</blockquote>
+    <blockquote>Поиск пользователя с выводом назначенных клиентских ролей на нескольких Тестовых Зонах Keycloak.</blockquote>
     <h3>Необходимые параметры:</h3>
     <form id="create_user_form" method="POST" action="/finduser" enctype="multipart/form-data">
         <label for="admin_name">Username Keycloak:</label><br>

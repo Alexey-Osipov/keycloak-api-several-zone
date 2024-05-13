@@ -6,12 +6,46 @@
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
 </head>
 <body>
-    <h2>Главная страница</h2>
-        <h4>Автоматизация создания клиентов и пользователей сразу нескольких Тестовых Зонах Keycloak.</h4>
-        <blockquote>Возможны также варианты добавления ролей как пользователям, так и клиентам.</blockquote><br>
+    <h2>Автоматизация администрирования нескольких Тестовых Зон Keycloak.</h2>
+        <h4>Описание:</h4>
+    <ul style="list-style-type: square;">
+    <li>
+        <h3>Создание пользователя</h3>
+    <ul>
+    <li><em>Базовое задение ТУЗ с возможностью назначения ролей одного клиента.</em></li>
+    <li><em>Назначение ролей уже существующему пользователю.</em></li>
+    </ul>
+    </li>
+    <li>
+    <h3>Создание Клиента</h3>
+    <ul>
+    <li><em>Создание клиента с возможностью создания ролей (можно передавать списком через запятую: role1,role2,role3).</em></li>
+    <li><em>Создание ролей у уже созданного клиента.</em></li>
+    </ul>
+    </li>
+    <li>
+    <h3>Загрузить Тему</h3>
+    <ul>
+    <li><em>Загрузка архива с Темой на сервера KC и его применние у&nbsp; указанного клиента.</em></li>
+    </ul>
+    </li>
+    <li>
+    <h3>Найти Пользователя</h3>
+    <ul>
+    <li><em>Поиск пользователя с выводом назначенных клиентских ролей.</em></li>
+    </ul>
+    </li>
+    <li>
+    <h3>Найти Клиента</h3>
+    <ul>
+    <li><em>Поиск клиента с выводом заведенных ролей.</em></li>
+    </ul>
+    </li>
+    </ul>
         <a href="/createuser"><button class="button">Создать пользователя</button></a>
         <a href="/createclient"><button class="button">Создать Клиента</button></a>
         <a href="/loadtheme"><button class="button">Загрузить Тему</button></a>
+        <a href="/loadmodule"><button class="button">Загрузить Модуль</button></a>
         <a href="/finduser"><button class="button">Найти Пользователя</button></a>
         <a href="/findclient"><button class="button">Найти Клиента</button></a>
     <br><br>

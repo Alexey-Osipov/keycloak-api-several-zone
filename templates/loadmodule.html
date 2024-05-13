@@ -2,39 +2,36 @@
 <html lang="ru">
 <meta charset="utf8">
 <head>
-    <title>Поиск клиента</title>
+    <title>Загрузка Модуля</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
 </head>
 <body>
-    <h2>Поиск клиента</h2>
+    <h2>Загрузка обновление модуля .jar</h2>
     <div id="spinner" style="display: none;">
         <!-- Спиннер -->
         <div class="spinner"></div>
     </div>
-    <blockquote>Поиск клиента с выводом заведенных ролей на нескольких Тестовых Зонах Keycloak.</blockquote>
+    <blockquote>Загрузка и обовление модуля jar на нескольких Тестовых Зонах Keycloak.</blockquote>
     <h3>Необходимые параметры:</h3>
-    <form id="create_user_form" method="POST" action="/findclient" enctype="multipart/form-data">
+    <form id="create_theme_form" method="POST" action="/loadmodule" enctype="multipart/form-data">
         <label for="admin_name">Username Keycloak:</label><br>
         <input type="text" id="admin_name" name="admin_name" required><br>
 
         <label for="admin_password">Password Keycloak:</label><br>
         <input type="password" id="admin_password" name="admin_password" required><br>
 
-		<div style="display: flex;">
+        <div style="display: flex;">
             <div style="flex: 1;">
                 <h3>Зоны выполнения:</h3>
                 <div id="zones_container"></div>
-
-                <h3>Укажите Realm:</h3>
-                <select id="realm" name="realm"></select>
             </div>
             <div style="flex: 5;">
-                <h3>Данные Клиента:</h3>
-                <label for="clientName">Короткое Имя (client_id):</label><br>
-                <input type="text" id="clientName" name="clientName" required><br>
+                <h3>Данные для загрузки модуля:</h3>
+                    <label for="file" title="Файл модуля в формате .jar">Модуль в формате *.jar:</label><br>
+                    <input type="file" id="file" name="file" accept=".jar" required><br>
             </div>
         </div><br>
-        <input type="submit" class="button" value="Найти клиента" onclick="validateAndSubmit(event)">
+        <input type="submit" class="button" value="Загрузить Модуль" onclick="validateAndSubmit(event)">
     </form>
         <form action="/"><br>
         <button type="submit" class="button">Главная страница</button>
@@ -57,7 +54,7 @@
                 return false;
             }
 
-            var requiredFields = ["admin_name", "admin_password", "userName"];
+            var requiredFields = ["admin_name", "admin_password"];
             var formValid = true;
 
             requiredFields.forEach(function(fieldId) {
@@ -80,7 +77,7 @@
             document.getElementById('spinner').style.display = 'block';
 
             // Отключаем отправку формы, чтобы спиннер продолжал показываться
-            document.getElementById('create_user_form').onsubmit = function() {
+            document.getElementById('create_theme_form').onsubmit = function() {
                 return false;
             };
 
@@ -90,11 +87,11 @@
 
         function runScript() {
             // Включаем отправку формы
-            document.getElementById('create_user_form').onsubmit = null;
+            document.getElementById('create_theme_form').onsubmit = null;
 
             // Отправляем форму
-            document.getElementById('create_user_form').submit();
+            document.getElementById('create_theme_form').submit();
         }
-    </script>
+</script>
 </body>
 </html>
